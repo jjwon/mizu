@@ -1,0 +1,12 @@
+{
+  "name": "mizu_ionic",
+  "app_id": "b147088f",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}
