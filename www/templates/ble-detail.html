@@ -6,14 +6,27 @@
           {{device.id}}
       </div>
     </div>
+
     <div class="list card">
       <div class="item item-divider">Services</div>
         <ion-list>
           <ion-item ng-repeat="service in device.services">
             {{service}}
+            <button class="button button-positive" on-tap="read(service)">
+              Read
+            </button>
           </ion-item>
         </ion-list>
+      </div>
     </div>
-
+    <div class="list card">
+      <div class="item item-divider">Characteristics</div>
+        <ion-list>
+          <ion-item ng-repeat="characteristic in device.characteristics">
+            {{characteristic}}
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

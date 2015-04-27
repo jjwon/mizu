@@ -4,6 +4,16 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
+  $scope.toggleChat = function(chat) {
+    if ($scope.isChatShown(chat)) {
+      $scope.shownChat = null;
+    } else {
+      $scope.shownChat = chat;
+    }
+  };
+  $scope.isChatShown = function(chat) {
+    return $scope.shownChat === chat;
+  };
 })
 
 .controller('ChatDetailCtrl', function($scope, $state, $stateParams, Chats) {
@@ -52,6 +62,10 @@ angular.module('starter.controllers', [])
       $scope.device = peripheral;
     }
   );
+
+  $scope.read = function(service) {
+
+  };
 })
 
 .controller('AccountCtrl', function($scope) {
