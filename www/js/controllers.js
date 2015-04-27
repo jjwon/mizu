@@ -20,10 +20,10 @@ angular.module('starter.controllers', [])
   $scope.devices = BLE.devices;
 
   var success = function () {
-      if ($scope.devices.length < 1) {
-          // a better solution would be to update a status message rather than an alert
-          alert("Didn't find any Bluetooth Low Energy devices.");
-      }
+    if ($scope.devices.length < 1) {
+      // a better solution would be to update a status message rather than an alert
+      alert("Didn't find any Bluetooth Low Energy devices.");
+    }
   };
 
   var failure = function (error) {
@@ -32,13 +32,13 @@ angular.module('starter.controllers', [])
 
   // pull to refresh
   $scope.onRefresh = function() {
-      BLE.scan().then(
-          success, failure
-      ).finally(
-          function() {
-              $scope.$broadcast('scroll.refreshComplete');
-          }
-      )
+    BLE.scan().then(
+      success, failure
+    ).finally(
+      function() {
+        $scope.$broadcast('scroll.refreshComplete');
+      }
+    )
   }
 
   // initial scan
@@ -48,9 +48,9 @@ angular.module('starter.controllers', [])
 
 .controller('BLEDetailCtrl', function($scope, $stateParams, BLE) {
   BLE.connect($stateParams.deviceId).then(
-      function(peripheral) {
-          $scope.device = peripheral;
-      }
+    function(peripheral) {
+      $scope.device = peripheral;
+    }
   );
 })
 
