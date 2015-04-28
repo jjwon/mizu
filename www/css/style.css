@@ -17,3 +17,8 @@
 .block-center {
   margin: 0 auto;
 }
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+}

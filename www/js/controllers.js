@@ -15,7 +15,7 @@ angular.module('starter.controllers', [])
     };
 
     if ($rootScope.isLoggedIn) {
-        $state.go('tabs.dash');
+        $state.go('tab.dash');
     }
 })
 
@@ -44,7 +44,14 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
   $scope.remove = function(chat) {
     Chats.remove(chat);
-    $state.transitionTo('tab.chats', {}, {});
+    $state.transitionTo('tab.chats');
+  };
+})
+
+.controller('AccountCtrl', function($scope, $state) {
+  $scope.ble = function() {
+    console.log('hello');
+    $state.transitionTo('tab.ble');
   };
 })
 
@@ -116,13 +123,6 @@ angular.module('starter.controllers', [])
     });
 })
 
-.controller('LoginHomeController', function($scope, $state, $rootScope) {
-
-    if (!$rootScope.isLoggedIn) {
-        $state.go('welcome');
-    }
-})
-
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
     $scope.user = {
         username: null,
@@ -167,6 +167,13 @@ angular.module('starter.controllers', [])
     $scope.forgot = function() {
         $state.go('forgot');
     };
+})
+
+.controller('LoginHomeController', function($scope, $state, $rootScope) {
+
+    if (!$rootScope.isLoggedIn) {
+        $state.go('welcome');
+    }
 })
 
 .controller('LoginForgotPasswordController', function($scope, $state, $ionicLoading) {
@@ -236,7 +243,7 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
-                $state.go('tabs.dash', {
+                $state.go('tab.dash', {
                     clear: true
                 });
             },
