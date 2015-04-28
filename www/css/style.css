@@ -13,3 +13,7 @@
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+
+.block-center {
+  margin: 0 auto;
+}
