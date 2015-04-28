@@ -54,18 +54,42 @@ angular.module('starter.controllers', [])
   // initial scan
   BLE.scan().then(success, failure);
 
+  // disconnect device when we leave the BLE tab
+  $scope.on('$ionicView.beforeLeave', function() {
+    BLE.disconnect();
+  });
 })
 
-.controller('BLEDetailCtrl', function($scope, $stateParams, BLE) {
+.controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
+  // connect to the appropriate device
   BLE.connect($stateParams.deviceId).then(
     function(peripheral) {
       $scope.device = peripheral;
     }
   );
 
-  $scope.read = function(service) {
+  // populate factory with attributes we want to use for notify
+  $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
+    BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
+  }
+})
 
-  };
+.controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
+  // grab attributes from factory
+  $scope.device = BLEActiveDevice.getAttributes()['device'];
+  $scope.service = BLEActiveDevice.getAttributes()['service'];
+  $scope.characteristic = BLEActiveDevice.getAttributes()['characteristic'];
+  $scope.notifications = [];
+
+  // subscribe to notifications
+  BLE.startNotification($scope.device, $scope.service, $scope.characteristic,
+    function(notification) {
+      notifications.push(notification);
+    },
+    function() {
+      console.log('Failed to start notifications');
+      alert('Failed to start notifications');
+    });
 })
 
 .controller('AccountCtrl', function($scope) {

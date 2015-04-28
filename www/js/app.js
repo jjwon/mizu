@@ -62,41 +62,52 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
+    url: '/chats',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/tab-chats.html',
+        controller: 'ChatsCtrl'
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
+    }
+  })
+  .state('tab.chat-detail', {
+    url: '/chats/:chatId',
+    views: {
+      'tab-chats': {
+        templateUrl: 'templates/chat-detail.html',
+        controller: 'ChatDetailCtrl'
       }
-    })
+    }
+  })
 
-    .state('tab.ble', {
-      url: '/ble',
-      views: {
-        'tab-ble': {
-          templateUrl: 'templates/tab-ble.html',
-          controller: 'BLECtrl'
-        }
+  .state('tab.ble', {
+    url: '/ble',
+    views: {
+      'tab-ble': {
+        templateUrl: 'templates/tab-ble.html',
+        controller: 'BLECtrl'
       }
-    })
-    .state('tab.ble-detail', {
-      url: '/ble/:deviceId',
-      views: {
-        'tab-ble': {
-          templateUrl: 'templates/ble-detail.html',
-          controller: 'BLEDetailCtrl'
-        }
+    }
+  })
+
+  .state('tab.ble-services', {
+    url: '/ble/:deviceId',
+    views: {
+      'tab-ble': {
+        templateUrl: 'templates/ble-services.html',
+        controller: 'BLEServicesCtrl'
       }
+    }
+  })
+
+  .state('tab.ble-notify', {
+    url: '/ble/:deviceId/notify',
+    views: {
+      'tab-ble': {
+        templateUrl: 'templates/ble-notify.html',
+        controller: 'BLENotifyCtrl'
+      }
+    }
   })
 
   .state('tab.account', {
