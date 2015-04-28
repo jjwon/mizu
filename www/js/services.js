@@ -122,7 +122,7 @@ angular.module('starter.services', [])
   var serviceId;
   var characteristicId;
 
-  return: {
+  return {
     getAttributes: function() {
       return {
         'device': device,

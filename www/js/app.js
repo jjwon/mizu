@@ -19,18 +19,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
 
-    // just checking if the BLE plugin works
-    ble.isEnabled(
-      function() {
-        console.log("Bluetooth is enabled");
-        alert("Bluetooth *is* enabled");
-      },
-      function() {
-        console.log("Bluetooth is *not* enabled");
-        alert("Bluetooth is *not* enabled");
-      }
-    );
+    Parse.initialize('CaaabJFvADd2dauVErCW7rVGg3djQ8dMJLhMtFBm', 'Z2VicEiifGL6wgvqnw24dmeoYCNvxYFRXu0yVpUh');
+    // var currentUser = Parse.User.current();
+    // $rootScope.user = null;
+    // $rootScope.isLoggedIn = false;
+    //
+    // if (currentUser) {
+    //   $rootScope.user = currentUser;
+    //   $rootScope.isLoggedIn = true;
+    //   $state.go('tabs.dash');
+    // }
 
+    // just checking if the BLE plugin works
+    // ble.isEnabled(
+    //   function() {
+    //     console.log("Bluetooth is enabled");
+    //     alert("Bluetooth *is* enabled");
+    //   },
+    //   function() {
+    //     console.log("Bluetooth is *not* enabled");
+    //     alert("Bluetooth is *not* enabled");
+    //   }
+    // );
   });
 })
 
@@ -42,15 +52,38 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  .state('welcome', {
+    url: '/welcome',
+    templateUrl: 'templates/welcome.html',
+    controller: 'WelcomeController'
+  })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginController'
+  })
+
+  .state('forgot', {
+    url: '/forgot',
+    templateUrl: 'templates/forgotPassword.html',
+    controller: 'LoginForgotPasswordController'
+  })
+
+  .state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'LoginRegisterController'
+  })
+
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"
   })
 
   // Each tab has its own nav history stack:
-
   .state('tab.dash', {
     url: '/dash',
     views: {
@@ -110,17 +143,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
-
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/welcome');
 
 });
