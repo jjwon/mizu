@@ -66,10 +66,6 @@ angular.module('starter.controllers', [])
 
   // initial scan
   BLE.scan().then(success, failure);
-
-  $scope.on('$ionicView.beforeLeave', function() {
-    BLE.disconnect();
-  });
 })
 
 .controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
