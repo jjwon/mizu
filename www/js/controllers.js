@@ -105,13 +105,6 @@ angular.module('starter.controllers', [])
     });
 })
 
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-})
-
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
     $scope.user = {
         username: null,
