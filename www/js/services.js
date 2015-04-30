@@ -1,5 +1,29 @@
 angular.module('starter.services', [])
 
+// .factory('User', function() {
+//   // store services/characteristics here so we can subscribe to notifications
+//   var user;
+//   var serviceId;
+//   var characteristicId;
+
+//   return {
+//     getAttributes: function() {
+//       return {
+//         'device': device,
+//         'service': serviceId,
+//         'characteristic': characteristicId
+//       };
+//     },
+//     setAttributes: function(newDevice, service, characteristic) {
+//       device = newDevice;
+//       serviceId = service;
+//       characteristicId = characteristic;
+//     }
+//   }
+
+// });
+
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

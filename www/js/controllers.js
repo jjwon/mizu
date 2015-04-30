@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope, Chats) {
   // $scope.percentage
-  console.log($scope);
+  // console.log($rootScope);
   $scope.percentage = "83";
   $scope.hello = "Jordeen";
 })
