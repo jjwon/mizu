@@ -1,5 +1,7 @@
-Test [Cordova BLE plugin](https://github.com/don/cordova-plugin-ble-central) with Ionic
+To set up and test:
 
+    bower install
     ionic platform add android
     ionic plugin add com.megster.cordova.ble
-    ionic run
+    ionic plugin add cordova-plugin-whitelist
+    ionic run android

@@ -73,14 +73,6 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('BLEDetailCtrl', function($scope, $stateParams, BLE) {
-  BLE.connect($stateParams.deviceId).then(
-      function(peripheral) {
-          $scope.device = peripheral;
-      }
-  );
-})
-
 .controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
   // connect to the appropriate device
   BLE.connect($stateParams.deviceId).then(
