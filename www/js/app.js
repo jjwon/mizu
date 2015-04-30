@@ -7,30 +7,17 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+.run(function($state, $rootScope) {
+  Parse.initialize('CaaabJFvADd2dauVErCW7rVGg3djQ8dMJLhMtFBm', 'Z2VicEiifGL6wgvqnw24dmeoYCNvxYFRXu0yVpUh');
+  var currentUser = Parse.User.current();
+  $rootScope.user = null;
+  $rootScope.isLoggedIn = false;
 
-    // just checking if the BLE plugin works
-    ble.isEnabled(
-        function() {
-            console.log("Bluetooth is enabled");
-        },
-        function() {
-            console.log("Bluetooth is *not* enabled");
-            alert("Bluetooth is *not* enabled");
-        }
-    );
-
-  });
+  if (currentUser) {
+    $rootScope.user = currentUser;
+    $rootScope.isLoggedIn = true;
+    $state.go('tab.dash');
+  }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -40,6 +27,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+
+  .state('welcome', {
+    url: '/welcome',
+    templateUrl: 'templates/welcome.html',
+    controller: 'WelcomeCtrl'
+  })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginController'
+  })
+
+  .state('forgot', {
+    url: '/forgot',
+    templateUrl: 'templates/forgotPassword.html',
+    controller: 'LoginForgotPasswordController'
+  })
+
+  .state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'LoginRegisterController'
+  })
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -88,14 +99,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('tab.ble-detail', {
+    .state('tab.ble-services', {
       url: '/ble/:deviceId',
       views: {
         'tab-ble': {
-          templateUrl: 'templates/ble-detail.html',
-          controller: 'BLEDetailCtrl'
+          templateUrl: 'templates/ble-services.html',
+          controller: 'BLEServicesCtrl'
         }
       }
+  })
+
+  .state('tab.ble-notify', {
+    url: '/ble/:deviceId/notify',
+    views: {
+      'tab-ble': {
+        templateUrl: 'templates/ble-notify.html',
+        controller: 'BLENotifyCtrl'
+      }
+    }
   })
 
   .state('tab.account', {
@@ -109,6 +130,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/welcome');
 
 });

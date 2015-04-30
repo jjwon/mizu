@@ -57,20 +57,21 @@ angular.module('starter.services', [])
 
     devices: [],
 
+    disconnect: function() {
+      if (connected) {
+        var id = connected.id;
+        ble.disconnect(connected.id, function() {
+          console.log("Disconnected " + id);
+        });
+        connected = null;
+      }
+    },
+
     scan: function() {
         var that = this;
         var deferred = $q.defer();
 
         that.devices.length = 0;
-
-        // disconnect the connected device (hack, device should disconnect when leaving detail page)
-        if (connected) {
-            var id = connected.id;
-            ble.disconnect(connected.id, function() {
-                console.log("Disconnected " + id);
-            });
-            connected = null;
-        }
 
         ble.startScan([],  /* scan for all services */
             function(peripheral){
@@ -93,6 +94,7 @@ angular.module('starter.services', [])
 
         return deferred.promise;
     },
+    
     connect: function(deviceId) {
         var deferred = $q.defer();
 
@@ -109,4 +111,28 @@ angular.module('starter.services', [])
         return deferred.promise;
     }
   };
+})
+
+.factory('BLEActiveDevice', function() {
+  // store services/characteristics here so we can subscribe to notifications
+  var device;
+  var serviceId;
+  var characteristicId;
+
+  return {
+    getAttributes: function() {
+      alert('nigga we out here');
+      return {
+        'device': device,
+        'service': serviceId,
+        'characteristic': characteristicId
+      };
+    },
+    setAttributes: function(newDevice, service, characteristic) {
+      alert('nigga we down here');
+      device = newDevice;
+      serviceId = service;
+      characteristicId = characteristic;
+    }
+  }
 });
