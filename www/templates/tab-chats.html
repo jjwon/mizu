@@ -1,24 +1,4 @@
 <ion-view view-title="Chats">
   <ion-content>
-    <ion-list>
-      <div ng-repeat="chat in chats">
-        <ion-item class="item-stable"
-                  ng-click="toggleChat(chat)"
-                  ng-class="{active: isChatShown(chat)}">
-            <i class="icon" ng-class="isChatShown(chat) ? 'ion-minus' : 'ion-plus'"></i>
-          &nbsp;
-          {{chat.name}}
-        </ion-item>
-        <ion-item class="item-accordion"
-                  ng-show="isChatShown(chat)">
-          {{chat.lastText}}
-        </ion-item>
-        <ion-item class="item-accordion"
-                  ng-show="isChatShown(chat)"
-                  href="#/tabs/chats/{{chat.id}}">
-          View more messages
-        </ion-item>
-      </div>
-    </ion-list>
   </ion-content>
 </ion-view>
