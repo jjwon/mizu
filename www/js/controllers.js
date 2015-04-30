@@ -5,7 +5,6 @@ angular.module('starter.controllers', [])
         $ionicHistory.clearHistory();
         $ionicHistory.clearCache();
     }
-
     $scope.login = function() {
         $state.go('login');
     };
@@ -20,24 +19,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashCtrl', function($scope, $state) {
-  $scope.logOut = function() {
-    Parse.User.logOut();
-    $state.transitionTo('welcome');
-  };
+
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.toggleChat = function(chat) {
-    if ($scope.isChatShown(chat)) {
-      $scope.shownChat = null;
-    } else {
-      $scope.shownChat = chat;
-    }
-  };
-  $scope.isChatShown = function(chat) {
-    return $scope.shownChat === chat;
-  };
+.controller('HomeCtrl', function($scope, Chats) {
+  // $scope.percentage
+  console.log($scope);
+  $scope.percentage = "83";
+  $scope.hello = "Jordeen";
 })
 
 .controller('ChatDetailCtrl', function($scope, $state, $stateParams, Chats) {
@@ -52,6 +41,11 @@ angular.module('starter.controllers', [])
   $scope.ble = function() {
     console.log('hello');
     $state.transitionTo('tab.ble');
+  };
+
+  $scope.logOut = function() {
+    Parse.User.logOut();
+    $state.transitionTo('welcome');
   };
 })
 

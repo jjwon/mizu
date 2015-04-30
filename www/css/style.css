@@ -18,7 +18,29 @@
   margin: 0 auto;
 }
 
+.center {
+  margin-left:auto;
+  margin-right:auto;
+  text-align: center;
+}
+
 .img-responsive {
   max-width: 100%;
   height: auto;
+}
+.tabs-nav {
+  margin-bottom: 0;
+}
+
+
+.tabs-top > .tabs{
+  top: 0;
+}
+/*-----------------HOME PAGE----------------------*/
+.percentage {
+
+}
+
+.hello {
+
 }
