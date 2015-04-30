@@ -70,15 +70,6 @@ angular.module('starter.controllers', [])
   $scope.on('$ionicView.beforeLeave', function() {
     BLE.disconnect();
   });
-
-})
-
-.controller('BLEDetailCtrl', function($scope, $stateParams, BLE) {
-  BLE.connect($stateParams.deviceId).then(
-      function(peripheral) {
-          $scope.device = peripheral;
-      }
-  );
 })
 
 .controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -95,6 +86,23 @@ angular.module('starter.controllers', [])
   }
 })
 
+<<<<<<< HEAD
+.controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
+  // connect to the appropriate device
+  BLE.connect($stateParams.deviceId).then(
+    function(peripheral) {
+      $scope.device = peripheral;
+    }
+  );
+
+  // populate factory with attributes we want to use for notify
+  $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
+    BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
+  }
+})
+
+=======
+>>>>>>> redux
 .controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
   // grab attributes from factory
   $scope.device = BLEActiveDevice.getAttributes()['device'];
@@ -113,6 +121,7 @@ angular.module('starter.controllers', [])
     });
 })
 
+<<<<<<< HEAD
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
@@ -120,6 +129,8 @@ angular.module('starter.controllers', [])
   };
 })
 
+=======
+>>>>>>> redux
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
     $scope.user = {
         username: null,

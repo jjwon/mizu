@@ -94,7 +94,7 @@ angular.module('starter.services', [])
 
         return deferred.promise;
     },
-    
+
     connect: function(deviceId) {
         var deferred = $q.defer();
 
