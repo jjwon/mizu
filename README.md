@@ -1,3 +1,6 @@
+npm	install -g bower
+sudo npm install -g ionic
+
 To set up and test:
 
     bower install
