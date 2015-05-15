@@ -7606,8 +7606,28 @@ h1, h2, h3, h4, h5, h6, p {
   color: #005A70;
   font-family: "Avenir", "Helvetica", "Arial", sans-serif; }
 
+#navigation {
+  border-top: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%; }
+  #navigation .tabs {
+    background-color: white;
+    color: #005A70;
+    padding-top: 10px;
+    position: relative; }
+
 .stats-screen {
   text-align: center; }
+  .stats-screen .waves {
+    background: #00bdcd;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    position: absolute;
+    width: 100%;
+    z-index: -1; }
   .stats-screen .percent-icon {
     font-size: 45%;
     top: -0.9em; }
@@ -7621,6 +7641,8 @@ h1, h2, h3, h4, h5, h6, p {
     transform: translateY(-50%);
     -webkit-transform: translateY(-50%); }
   .stats-screen h3 {
-    bottom: 20px;
-    display: inline-block;
-    font-size: 18px; }
+    bottom: 100px;
+    font-size: 18px;
+    left: 0;
+    position: absolute;
+    right: 0; }
