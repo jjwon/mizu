@@ -7653,7 +7653,7 @@ h1, h2, h3, h4, h5, h6, p {
 .drop {
   position: relative;
   margin: 0 auto;
-  width: 100%;
+  width: 250%;
   height: 15em;
   top: 41px;
   z-index: -1000;
@@ -7664,7 +7664,6 @@ h1, h2, h3, h4, h5, h6, p {
   display: block;
   position: absolute; }
 
-/* Drop */
 /* Surface */
 .drop:after {
   background: #00bdcd;
