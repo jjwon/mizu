@@ -52,8 +52,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'LoginRegisterController'
   })
 
+  .state('calibrate', {
+    url: '/calibrate/:deviceId',
+    templateUrl: 'templates/calibrate.html',
+    controller: 'CalibrateController'
+  })
+
+  .state('fill-water', {
+    url: '/fill-water',
+    templateUrl: 'templates/fill-water.html',
+    controller: 'FillWaterController'
+  })
+
+  .state('connect', {
+    url: "/connect",
+    templateUrl: 'templates/connect.html',
+    controller: 'BLECtrl'
+  })
+
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"
@@ -70,26 +88,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
     .state('tab.ble', {
       url: '/ble',
       views: {

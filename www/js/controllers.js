@@ -26,18 +26,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('BLECtrl', function($scope, BLE) {
+.controller('BLECtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
 
   // keep a reference since devices will be added
   $scope.devices = BLE.devices;
@@ -79,6 +68,7 @@ angular.module('starter.controllers', [])
   // populate factory with attributes we want to use for notify
   $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
     BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
+    BLEActiveDevice.read();
   }
 })
 
@@ -220,8 +210,8 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
-                $state.go('tab.dash', {
-                    clear: true
+                $state.go('connect', {
+                  clear: true
                 });
             },
             error: function(user, error) {
@@ -239,4 +229,55 @@ angular.module('starter.controllers', [])
             }
         });
     };
-});
+})
+
+.controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
+    $scope.user = {};
+    $scope.error = {};
+
+    // connect to the appropriate device
+    BLE.connect($stateParams.deviceId).then(
+      function(peripheral) {
+        $scope.device = peripheral;
+      }
+    );
+
+    BLEActiveDevice.setDevice($stateParams.deviceId);
+
+    $scope.calibrate = function() {
+        $scope.loading = $ionicLoading.show({
+            content: 'Sending',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+    };
+
+    $scope.confirm = function() {
+      $state.go('fill-water', {
+        clear:true
+      });
+    };
+})
+
+.controller('FillWaterController', function($scope, $state, $ionicLoading, $rootScope) {
+    $scope.user = {};
+    $scope.error = {};
+
+    $scope.calibrate = function() {
+        $scope.loading = $ionicLoading.show({
+            content: 'Sending',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+    };
+
+    $scope.confirm = function() {
+      $state.go('tab.dash', {
+        clear:true
+      });
+    }
+})

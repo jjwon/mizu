@@ -11,7 +11,6 @@
         <ion-list>
           <ion-item ng-repeat="item in device.characteristics"
                     ng-click="setAttributes(device.id, item.service, item.characteristic)"
-                    href="#/tab/ble/{{device.id}}/notify"
                     type="item-text-wrap">
             <h3>Service {{item.service}}</h3>
             <p>Characteristic {{item.characteristic}}</p>
