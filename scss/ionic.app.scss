@@ -21,3 +21,66 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+$ocean: rgba(0, 189, 205, 1.0);
+$oceanDark: rgba(0, 189, 205, 0.4);
+$oceanLight: rgba(202, 234, 238, 0.8);
+$dark: #005A70;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	color: $dark;
+	font-family: "Avenir", "Helvetica", "Arial", sans-serif;
+}
+
+#navigation {
+	border-top: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	.tabs {
+		background-color: white;
+		color: $dark;
+		padding-top: 10px;
+		position: relative;
+	}
+}
+
+.stats-screen {
+	text-align: center;
+	.waves {
+		background: $ocean;
+		bottom: 0;
+		left: 0;
+		height: 50%;
+		position: absolute;
+		width: 100%;
+		z-index: -1;
+	}
+	.percent-icon {
+		font-size: 45%;
+		top: -0.9em;
+	}
+	h1 {
+		display: block;
+		font-family: "Dosis", sans-serif;
+		font-weight: 600;
+		font-size: 120px;
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		-webkit-transform: translateY(-50%);
+	}
+	h3 {
+		bottom: 100px;
+		font-size: 18px;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
+}
