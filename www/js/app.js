@@ -75,22 +75,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/dash',
     templateUrl: 'templates/dash.html',
     controller: 'DashCtrl'
-  })
-  .state('ble', {
-    url: '/ble',
-    templateUrl: 'templates/ble.html',
-    controller: 'BLECtrl'
-  })
-  .state('ble-services', {
-    url: '/ble/:deviceId',
-    templateUrl: 'templates/ble-services.html',
-    controller: 'BLEServicesCtrl'
-  })
-
-  .state('ble-notify', {
-    url: '/ble/:deviceId/notify',
-    templateUrl: 'templates/ble-notify.html',
-    controller: 'BLENotifyCtrl'
   });
 
   // if none of the above states are matched, use this as the fallback
