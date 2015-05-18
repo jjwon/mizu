@@ -7620,14 +7620,38 @@ h1, h2, h3, h4, h5, h6, p {
 
 .stats-screen {
   text-align: center; }
-  .stats-screen .waves {
-    background: #00bdcd;
-    bottom: 0;
-    left: 0;
-    height: 50%;
-    position: absolute;
-    width: 100%;
-    z-index: -1; }
+  .stats-screen .waves-block {
+    /* Surface */ }
+    .stats-screen .waves-block .waves {
+      background: #00bdcd;
+      bottom: 0;
+      left: 0;
+      height: 100%;
+      top: 50%;
+      position: absolute;
+      width: 100%;
+      z-index: -1; }
+    .stats-screen .waves-block .drop {
+      position: absolute;
+      margin: 0 auto;
+      width: 250%;
+      height: 3em;
+      top: calc(50% - .5em);
+      z-index: -1000;
+      overflow: hidden; }
+    .stats-screen .waves-block .drop:before, .stats-screen .waves-block .drop:after {
+      content: "";
+      display: block;
+      position: absolute; }
+    .stats-screen .waves-block .drop:after {
+      background: #00bdcd;
+      border-radius: 50% 0 50% 0;
+      left: 0;
+      bottom: 0;
+      width: inherit;
+      height: 3em;
+      -webkit-animation: surface 3s linear infinite;
+      /* Safari 4+ */ }
   .stats-screen .percent-icon {
     font-size: 45%;
     top: -0.9em; }
@@ -7650,6 +7674,8 @@ h1, h2, h3, h4, h5, h6, p {
 *, *:before, *:after {
   box-sizing: border-box; }
 
+<<<<<<< HEAD
+=======
 .drop {
   position: relative;
   margin: 0 auto;
@@ -7675,6 +7701,7 @@ h1, h2, h3, h4, h5, h6, p {
   -webkit-animation: surface 3s linear infinite;
   /* Safari 4+ */ }
 
+>>>>>>> master
 @-webkit-keyframes surface {
   50% {
     border-radius: 0 75% 0 75%;

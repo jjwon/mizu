@@ -24,6 +24,17 @@ angular.module('starter.controllers', [])
     Parse.User.logOut();
     $state.transitionTo('welcome');
   };
+
+  Parse.User.current().fetch().then(function(user) {
+    var today = getDate();
+    var water_pct = user.get("water_pct");
+    var first_name = user.get("first_name");
+    document.getElementsByClassName("waves")[0].style.top = (100-water_pct[today]) + "%";
+    document.getElementsByClassName("drop")[0].style.top = "calc(" + (100-water_pct[today]) + "% - .5em)";
+    $scope.percentage = water_pct[today];
+    $scope.first_name = first_name;
+    $scope.$apply();
+  });
 })
 
 .controller('BLECtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
