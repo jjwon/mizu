@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
 
     // If you're at this page, you have already registered a device.
     var device = user.get("device");
-    // BLE.connect(device);
+    BLE.connect(device);
 
     document.getElementsByClassName("waves")[0].style.top = (100-water_pct[today]) + "%";
     document.getElementsByClassName("drop")[0].style.top = "calc(" + (100-water_pct[today]) + "% - .5em)";
@@ -258,13 +258,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
-    $scope.user = {};
-    $scope.error = {};
+    var currentUser = $rootScope.user;
 
     // connect to the appropriate device
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
         $scope.device = peripheral;
+        currentUser.set("device", $stateParams.deviceId);
+        currentUser.save();
       }
     );
 
