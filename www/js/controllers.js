@@ -15,7 +15,11 @@ angular.module('starter.controllers', [])
     };
 
     if ($rootScope.isLoggedIn) {
-        $state.go('tab.dash');
+        if ($rootScope.device != null) {
+            $state.go('dash');
+        } else {
+            $state.go('calibrate');
+        }
     }
 })
 
@@ -77,7 +81,7 @@ angular.module('starter.controllers', [])
   // connect to the appropriate device
   BLE.connect($stateParams.deviceId).then(
     function(peripheral) {
-      $scope.device = peripheral;
+      $rootScope.device = peripheral;
     }
   );
 
@@ -85,7 +89,7 @@ angular.module('starter.controllers', [])
   $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
     BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
     BLEActiveDevice.read();
-  }
+  };
 })
 
 .controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -131,13 +135,14 @@ angular.module('starter.controllers', [])
                 $rootScope.isLoggedIn = true;
 
                 var device = user.get('device');
+                console.log(device);
                 $rootScope.device = device;
-                if (device != null) {
-                  $state.transitionTo('tab.dash', {
+                if (device == null) {
+                    $state.transitionTo('connect');
+                } else {
+                  $state.transitionTo('dash', {
                       clear: true
                   });
-                } else {
-                  $state.transitionTo('connect');
                 }
             },
             error: function(user, err) {
@@ -225,14 +230,17 @@ angular.module('starter.controllers', [])
 
         var user = new Parse.User();
         user.set("username", $scope.user.email);
-        user.set("password", $scope.user.password);
         user.set("email", $scope.user.email);
+        user.set("password", $scope.user.password);
+        user.set("first_name", $scope.user.first_name);
+        user.set("last_name", $scope.user.last_name);
 
         user.signUp(null, {
             success: function(user) {
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
+                $rootScope.device = null;
                 $state.go('connect', {
                   clear: true
                 });
@@ -255,13 +263,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
-    $scope.user = {};
-    $scope.error = {};
+    var currentUser = $rootScope.user;
 
     // connect to the appropriate device
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
         $scope.device = peripheral;
+        currentUser.set("device", $stateParams.deviceId);
+        currentUser.save();
       }
     );
 
@@ -299,7 +308,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.confirm = function() {
-      $state.go('tab.dash', {
+      $state.go('dash', {
         clear:true
       });
     }
