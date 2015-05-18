@@ -24,8 +24,11 @@
   height: auto;
 }
 
-.water-bottle {
-  width:20%;
+#water-bottle {
+  width:40vw;
+  -webkit-transition:-webkit-transform .5s;
+  -webkit-transition-timing-function: ease-out;
+  padding: 10px;
   margin: auto;
   display: block;
 }

@@ -239,6 +239,7 @@ angular.module('starter.controllers', [])
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
         $scope.device = peripheral;
+        BLEActiveDevice.notifyAccel($scope);
       }
     );
 
@@ -254,7 +255,9 @@ angular.module('starter.controllers', [])
         });
     };
 
+    //Write to BLE peripheral to set bias point
     $scope.confirm = function() {
+      BLEActiveDevice.setBias();
       $state.go('fill-water', {
         clear:true
       });

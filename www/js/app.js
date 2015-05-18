@@ -14,9 +14,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $rootScope.isLoggedIn = false;
 
   if (currentUser) {
+    // Parse.User.logOut();
     $rootScope.user = currentUser;
     $rootScope.isLoggedIn = true;
     $state.go('tab.dash');
+    // $state.go('connect');
   }
 })
 

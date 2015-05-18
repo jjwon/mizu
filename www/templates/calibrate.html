@@ -1,7 +1,17 @@
 <ion-view view-title="Calibrate">
     <ion-content class="padding center" has-header="true" has-tabs="true" >
-        <img class="water-bottle" src="img/bottle.png">
+
+        <h1>Set your Mizu flat on a table</h1>
+        <img id="water-bottle" style="{{bottlestyle}}" src="img/waterbottle.png">
+
+        <div>{{xData}}</div>
+        <div>{{yData}}</div>
+        <div>{{zData}}</div>
+        <div>{{pitch}}</div>
+        <div>{{roll}}</div>
     </ion-content>
+
+
     <div class="bar bar-footer bar-balanced" ng-click="confirm()">
         <div class="title">Confirm</div>
     </div>
