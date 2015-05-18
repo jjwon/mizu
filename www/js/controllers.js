@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
 
     // If you're at this page, you have already registered a device.
     var device = user.get("device");
-    BLE.connect(device);
+    // BLE.connect(device);
 
     document.getElementsByClassName("waves")[0].style.top = (100-water_pct[today]) + "%";
     document.getElementsByClassName("drop")[0].style.top = "calc(" + (100-water_pct[today]) + "% - .5em)";
@@ -77,7 +77,7 @@ angular.module('starter.controllers', [])
   // connect to the appropriate device
   BLE.connect($stateParams.deviceId).then(
     function(peripheral) {
-      $scope.device = peripheral;
+      $rootScope.device = peripheral;
     }
   );
 
@@ -85,7 +85,7 @@ angular.module('starter.controllers', [])
   $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
     BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
     BLEActiveDevice.read();
-  }
+  };
 })
 
 .controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -225,14 +225,17 @@ angular.module('starter.controllers', [])
 
         var user = new Parse.User();
         user.set("username", $scope.user.email);
-        user.set("password", $scope.user.password);
         user.set("email", $scope.user.email);
+        user.set("password", $scope.user.password);
+        user.set("first_name", $scope.user.first_name);
+        user.set("last_name", $scope.user.last_name);
 
         user.signUp(null, {
             success: function(user) {
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
+                $rootScope.device = null;
                 $state.go('connect', {
                   clear: true
                 });
