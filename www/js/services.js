@@ -125,6 +125,9 @@ angular.module('starter.services', [])
       }
       ble.write(device, serviceId, writeCharacteristic, z - 1000, success);
     },
+    stopNotify: function() {
+      ble.stopNotification(device, serviceId, accelCharacteristic);
+    },
     setAttributes: function(newDevice, service, characteristic) {
       device = newDevice;
       serviceId = service;
