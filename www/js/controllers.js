@@ -135,7 +135,6 @@ angular.module('starter.controllers', [])
                 $rootScope.isLoggedIn = true;
 
                 var device = user.get('device');
-                console.log(device);
                 $rootScope.device = device;
                 if (device == null) {
                     $state.transitionTo('connect');
