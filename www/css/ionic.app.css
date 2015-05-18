@@ -7674,34 +7674,6 @@ h1, h2, h3, h4, h5, h6, p {
 *, *:before, *:after {
   box-sizing: border-box; }
 
-<<<<<<< HEAD
-=======
-.drop {
-  position: relative;
-  margin: 0 auto;
-  width: 250%;
-  height: 16.5em;
-  top: 41px;
-  z-index: -1000;
-  overflow: hidden; }
-
-.drop:before, .drop:after {
-  content: "";
-  display: block;
-  position: absolute; }
-
-/* Surface */
-.drop:after {
-  background: #00bdcd;
-  border-radius: 50% 0 50% 0;
-  left: 0;
-  bottom: 0;
-  width: inherit;
-  height: 3em;
-  -webkit-animation: surface 3s linear infinite;
-  /* Safari 4+ */ }
-
->>>>>>> master
 @-webkit-keyframes surface {
   50% {
     border-radius: 0 75% 0 75%;
