@@ -15,8 +15,8 @@ angular.module('starter.controllers', [])
     };
 
     if ($rootScope.isLoggedIn) {
-        if $(rootScope.device != null) {
-            $state.go('tab.dash');
+        if ($rootScope.device != null) {
+            $state.go('dash');
         } else {
             $state.go('calibrate');
         }
@@ -140,7 +140,7 @@ angular.module('starter.controllers', [])
                 if (device == null) {
                     $state.transitionTo('connect');
                 } else {
-                  $state.transitionTo('tab.dash', {
+                  $state.transitionTo('dash', {
                       clear: true
                   });
                 }
@@ -308,7 +308,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.confirm = function() {
-      $state.go('tab.dash', {
+      $state.go('dash', {
         clear:true
       });
     }
