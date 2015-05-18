@@ -12,6 +12,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   var currentUser = Parse.User.current();
   $rootScope.user = null;
   $rootScope.isLoggedIn = false;
+  $rootScope.device = null;
 
   if (currentUser) {
     $rootScope.user = currentUser;
