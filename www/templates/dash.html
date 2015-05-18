@@ -1,4 +1,12 @@
 <ion-view title="Dashboard">
+  <ion-nav-buttons side="primary">
+    <button class="button" ng-click "viewProfile()">Profile</button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button" ng-click "viewSettings()">Settings</button>
+    <button class="button" ng-click "logOut()">Log Out</button>
+  </ion-nav-buttons>
+
   <ion-pane class="stats-screen">
     <h1>{{ percentage }}<sup class="percent-icon">%</sup></h1>
     <h3>Good morning, {{ first_name }}!</h3>
@@ -8,5 +16,4 @@
     </div>
 
   </ion-pane>
-
 </ion-view>
