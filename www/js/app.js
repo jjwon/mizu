@@ -12,13 +12,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   var currentUser = Parse.User.current();
   $rootScope.user = null;
   $rootScope.isLoggedIn = false;
+  $rootScope.device = null;
 
   if (currentUser) {
     // Parse.User.logOut();
     $rootScope.user = currentUser;
     $rootScope.isLoggedIn = true;
-    $state.go('tab.dash');
-    // $state.go('connect');
+    $state.go('dash');
   }
 })
 
@@ -72,51 +72,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'BLECtrl'
   })
 
-  // setup an abstract state for the tabs directive
-  .state('tab', {
-    url: "/tab",
-    abstract: true,
-    templateUrl: "templates/tabs.html"
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
+  .state('dash', {
     url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-    .state('tab.ble', {
-      url: '/ble',
-      views: {
-        'tab-ble': {
-          templateUrl: 'templates/tab-ble.html',
-          controller: 'BLECtrl'
-        }
-      }
-    })
-    .state('tab.ble-services', {
-      url: '/ble/:deviceId',
-      views: {
-        'tab-ble': {
-          templateUrl: 'templates/ble-services.html',
-          controller: 'BLEServicesCtrl'
-        }
-      }
-  })
-
-  .state('tab.ble-notify', {
-    url: '/ble/:deviceId/notify',
-    views: {
-      'tab-ble': {
-        templateUrl: 'templates/ble-notify.html',
-        controller: 'BLENotifyCtrl'
-      }
-    }
+    templateUrl: 'templates/dash.html',
+    controller: 'DashCtrl'
   });
 
   // if none of the above states are matched, use this as the fallback

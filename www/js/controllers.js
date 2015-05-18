@@ -15,15 +15,35 @@ angular.module('starter.controllers', [])
     };
 
     if ($rootScope.isLoggedIn) {
-        $state.go('tab.dash');
+        if ($rootScope.device != null) {
+            $state.go('dash');
+        } else {
+            $state.go('calibrate');
+        }
     }
 })
 
-.controller('DashCtrl', function($scope, $state) {
+.controller('DashCtrl', function($scope, $state, BLE) {
   $scope.logOut = function() {
     Parse.User.logOut();
     $state.transitionTo('welcome');
   };
+
+  Parse.User.current().fetch().then(function(user) {
+    var today = getDate();
+    var water_pct = user.get("water_pct");
+    var first_name = user.get("first_name");
+
+    // If you're at this page, you have already registered a device.
+    var device = user.get("device");
+    BLE.connect(device);
+
+    document.getElementsByClassName("waves")[0].style.top = (100-water_pct[today]) + "%";
+    document.getElementsByClassName("drop")[0].style.top = "calc(" + (100-water_pct[today]) + "% - .5em)";
+    $scope.percentage = water_pct[today];
+    $scope.first_name = first_name;
+    $scope.$apply();
+  });
 })
 
 .controller('BLECtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -61,7 +81,7 @@ angular.module('starter.controllers', [])
   // connect to the appropriate device
   BLE.connect($stateParams.deviceId).then(
     function(peripheral) {
-      $scope.device = peripheral;
+      $rootScope.device = peripheral;
     }
   );
 
@@ -69,7 +89,7 @@ angular.module('starter.controllers', [])
   $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
     BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
     BLEActiveDevice.read();
-  }
+  };
 })
 
 .controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -113,9 +133,16 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
-                $state.transitionTo('tab.dash', {
-                    clear: true
-                });
+
+                var device = user.get('device');
+                $rootScope.device = device;
+                if (device == null) {
+                    $state.transitionTo('connect');
+                } else {
+                  $state.transitionTo('dash', {
+                      clear: true
+                  });
+                }
             },
             error: function(user, err) {
                 $ionicLoading.hide();
@@ -202,14 +229,17 @@ angular.module('starter.controllers', [])
 
         var user = new Parse.User();
         user.set("username", $scope.user.email);
-        user.set("password", $scope.user.password);
         user.set("email", $scope.user.email);
+        user.set("password", $scope.user.password);
+        user.set("first_name", $scope.user.first_name);
+        user.set("last_name", $scope.user.last_name);
 
         user.signUp(null, {
             success: function(user) {
                 $ionicLoading.hide();
                 $rootScope.user = user;
                 $rootScope.isLoggedIn = true;
+                $rootScope.device = null;
                 $state.go('connect', {
                   clear: true
                 });
@@ -232,14 +262,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
-    $scope.user = {};
-    $scope.error = {};
+    var currentUser = $rootScope.user;
 
     // connect to the appropriate device
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
         $scope.device = peripheral;
         BLEActiveDevice.notifyAccel($scope);
+        currentUser.set("device", $stateParams.deviceId);
+        currentUser.save();
       }
     );
 
@@ -279,7 +310,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.confirm = function() {
-      $state.go('tab.dash', {
+      $state.go('dash', {
         clear:true
       });
     }
