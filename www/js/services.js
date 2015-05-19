@@ -221,6 +221,11 @@ angular.module('starter.services', [])
           }
         }
 
+        var water_pct = user.get("water_pct");
+        water_pct[today] = scope.percentage;
+        user.set("water_pct", water_pct);
+        user.save();
+
         scope.capValue = capValue;
         scope.$apply();
       }
