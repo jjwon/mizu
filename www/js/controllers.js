@@ -48,9 +48,15 @@ angular.module('starter.controllers', [])
     $scope.first_name = first_name;
     $scope.$apply();
 
+    if (device != "FF:FF:FF:FF:FF:FF") {
+      alert('fuck');
+    }
+
     BLE.connect(device).then(function(peripheral) {
       alert("hello!!!");
       BLE.readCap($scope);
+    }, function(reason) {
+      alert(reason);
     });
   });
 })
