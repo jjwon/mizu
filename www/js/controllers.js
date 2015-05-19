@@ -48,13 +48,8 @@ angular.module('starter.controllers', [])
     $scope.first_name = first_name;
     $scope.$apply();
 
-    if (device != "FF:FF:FF:FF:FF:FF") {
-      alert('fuck');
-    }
-
     BLE.connect(device).then(function(peripheral) {
-      alert("hello!!!");
-      BLE.readCap($scope);
+      BLEActiveDevice.readCap($scope);
     }, function(reason) {
       alert(reason);
     });
@@ -90,39 +85,6 @@ angular.module('starter.controllers', [])
 
   // initial scan
   BLE.scan().then(success, failure);
-})
-
-.controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
-  // connect to the appropriate device
-  BLE.connect($stateParams.deviceId).then(
-    function(peripheral) {
-      $rootScope.device = peripheral;
-    }
-  );
-
-  // populate factory with attributes we want to use for notify
-  $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
-    BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
-    BLEActiveDevice.read();
-  };
-})
-
-.controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
-  // grab attributes from factory
-  $scope.device = BLEActiveDevice.getAttributes()['device'];
-  $scope.service = BLEActiveDevice.getAttributes()['service'];
-  $scope.characteristic = BLEActiveDevice.getAttributes()['characteristic'];
-  $scope.notifications = [];
-
-  // subscribe to notifications
-  BLE.startNotification($scope.device, $scope.service, $scope.characteristic,
-    function(notification) {
-      notifications.push(notification);
-    },
-    function() {
-      console.log('Failed to start notifications');
-      alert('Failed to start notifications');
-    });
 })
 
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
