@@ -7613,6 +7613,8 @@ h2 {
 .bar.bar-stable {
   background: transparent;
   border: none; }
+.bar .button.button-clear {
+  color: #005A70; }
 
 #navigation {
   border-top: none;
