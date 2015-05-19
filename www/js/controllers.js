@@ -278,22 +278,30 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FillWaterController', function($scope, $state, $ionicLoading, $rootScope) {
-    $scope.user = {};
-    $scope.error = {};
+  $scope.user = {};
+  $scope.error = {};
 
-    $scope.calibrate = function() {
-        $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-    };
+  $scope.calibrate = function() {
+    $scope.loading = $ionicLoading.show({
+      content: 'Sending',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+  };
 
-    $scope.confirm = function() {
-      $state.go('dash', {
-        clear:true
-      });
-    }
+  $scope.confirm = function() {
+    $state.go('dash', {
+      clear: true
+    });
+  }
+})
+
+.controller('SettingsCtrl', function($scope, $state) {
+  $scope.goToConnect = function() {
+    $state.go('connect' {
+      clear: true
+    });
+  }
 })

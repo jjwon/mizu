@@ -4,8 +4,7 @@
        pulling-text="Pull to refresh..."
        on-refresh="onRefresh()">
     </ion-refresher>
-
-        <div class="list">
+    <div class="list">
       <label class="item item-input">
         <span class="input-label">Bottle Size (mL):</span>
         <input ng-model="user.bottleSize" type="number">
@@ -15,7 +14,6 @@
         <input ng-model="user.dailyMax" type="number">
       </label>
     </div>
-
     <ion-list>
       <ion-item class="item-icon-right"
                 ng-repeat="device in devices"
@@ -26,8 +24,5 @@
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
-
-
-
   </ion-content>
 </ion-view>
