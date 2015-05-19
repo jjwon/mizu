@@ -1,22 +1,22 @@
 angular.module('starter.controllers', [])
 
 .controller('WelcomeCtrl', function($scope, $state, $rootScope, $ionicHistory, $stateParams) {
-    if ($stateParams.clear) {
-        $ionicHistory.clearHistory();
-        $ionicHistory.clearCache();
-    }
+  if ($stateParams.clear) {
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
+  }
 
-    $scope.login = function() {
-        $state.go('login');
-    };
+  $scope.login = function() {
+    $state.go('login');
+  };
 
-    $scope.signUp = function() {
-        $state.go('register');
-    };
+  $scope.signUp = function() {
+    $state.go('register');
+  };
 
-    if ($rootScope.isLoggedIn) {
-        $state.go('tab.dash');
-    }
+  if ($rootScope.isLoggedIn) {
+    $state.go('tab.dash');
+  }
 })
 
 .controller('DashCtrl', function($scope, $state) {
@@ -41,31 +41,45 @@ angular.module('starter.controllers', [])
 
   // keep a reference since devices will be added
   $scope.devices = BLE.devices;
+  var user = Parse.User.current().fetch();
+  $scope.saveSettings = function() {
+    console.log($scope.user.dailyMax);
+    user.set("daily_max", $scope.user.dailyMax);
+    user.set("bottle_size", $scope.user.bottleSize);
+    console.log(user);
+    // user.save();
+
+    user.save(null, {
+      success: function(user) {
+        console.log("FUCK YAH WE SAVED");
+      }
+    });
+  };
 
   var success = function () {
-      if ($scope.devices.length < 1) {
+    if ($scope.devices.length < 1) {
           // a better solution would be to update a status message rather than an alert
           alert("Didn't find any Bluetooth Low Energy devices.");
-      }
-  };
+        }
+      };
 
-  var failure = function (error) {
-      alert(error);
-  };
+      var failure = function (error) {
+        alert(error);
+      };
 
   // pull to refresh
   $scope.onRefresh = function() {
-      BLE.scan().then(
-          success, failure
+    BLE.scan().then(
+      success, failure
       ).finally(
-          function() {
-              $scope.$broadcast('scroll.refreshComplete');
-          }
-      )
-  }
+      function() {
+        $scope.$broadcast('scroll.refreshComplete');
+      }
+      );
+    };
 
   // initial scan
-  BLE.scan().then(success, failure);
+  // BLE.scan().then(success, failure);
 })
 
 .controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -74,13 +88,13 @@ angular.module('starter.controllers', [])
     function(peripheral) {
       $scope.device = peripheral;
     }
-  );
+    );
 
   // populate factory with attributes we want to use for notify
   $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
     BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
     BLEActiveDevice.read();
-  }
+  };
 })
 
 .controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
@@ -102,113 +116,113 @@ angular.module('starter.controllers', [])
 })
 
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
-    $scope.user = {
-        username: null,
-        password: null
-    };
+  $scope.user = {
+    username: null,
+    password: null
+  };
 
-    $scope.error = {};
+  $scope.error = {};
 
-    $scope.login = function() {
-        $scope.loading = $ionicLoading.show({
-            content: 'Logging in',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
+  $scope.login = function() {
+    $scope.loading = $ionicLoading.show({
+      content: 'Logging in',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+
+    var user = $scope.user;
+    Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
+      success: function(user) {
+        $ionicLoading.hide();
+        $rootScope.user = user;
+        $rootScope.isLoggedIn = true;
+        $state.transitionTo('tab.dash', {
+          clear: true
         });
-
-        var user = $scope.user;
-        Parse.User.logIn(('' + user.username).toLowerCase(), user.password, {
-            success: function(user) {
-                $ionicLoading.hide();
-                $rootScope.user = user;
-                $rootScope.isLoggedIn = true;
-                $state.transitionTo('tab.dash', {
-                    clear: true
-                });
-            },
-            error: function(user, err) {
-                $ionicLoading.hide();
+      },
+      error: function(user, err) {
+        $ionicLoading.hide();
                 // The login failed. Check error to see why.
                 if (err.code === 101) {
-                    $scope.error.message = 'Invalid login credentials';
+                  $scope.error.message = 'Invalid login credentials';
                 } else {
-                    $scope.error.message = 'An unexpected error has ' +
-                        'occurred, please try again.';
+                  $scope.error.message = 'An unexpected error has ' +
+                  'occurred, please try again.';
                 }
                 $scope.$apply();
-            }
-        });
-    };
+              }
+            });
+  };
 
-    $scope.forgot = function() {
-        $state.go('forgot');
-    };
+  $scope.forgot = function() {
+    $state.go('forgot');
+  };
 })
 
 .controller('LoginHomeController', function($scope, $state, $rootScope) {
 
-    if (!$rootScope.isLoggedIn) {
-        $state.go('welcome');
-    }
+  if (!$rootScope.isLoggedIn) {
+    $state.go('welcome');
+  }
 })
 
 .controller('LoginForgotPasswordController', function($scope, $state, $ionicLoading) {
-    $scope.user = {};
-    $scope.error = {};
-    $scope.state = {
-        success: false
-    };
+  $scope.user = {};
+  $scope.error = {};
+  $scope.state = {
+    success: false
+  };
 
-    $scope.reset = function() {
-        $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
+  $scope.reset = function() {
+    $scope.loading = $ionicLoading.show({
+      content: 'Sending',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
 
-        Parse.User.requestPasswordReset($scope.user.email, {
-            success: function() {
+    Parse.User.requestPasswordReset($scope.user.email, {
+      success: function() {
                 // TODO: show success
                 $ionicLoading.hide();
                 $scope.state.success = true;
                 $scope.$apply();
-            },
-            error: function(err) {
+              },
+              error: function(err) {
                 $ionicLoading.hide();
                 if (err.code === 125) {
-                    $scope.error.message = 'Email address does not exist';
+                  $scope.error.message = 'Email address does not exist';
                 } else {
-                    $scope.error.message = 'An unknown error has occurred, ' +
-                        'please try again';
+                  $scope.error.message = 'An unknown error has occurred, ' +
+                  'please try again';
                 }
                 $scope.$apply();
-            }
-        });
-    };
+              }
+            });
+  };
 
-    $scope.login = function() {
-        $state.go('login');
-    };
+  $scope.login = function() {
+    $state.go('login');
+  };
 })
 
 .controller('LoginRegisterController', function($scope, $state, $ionicLoading, $rootScope) {
-    $scope.user = {};
-    $scope.error = {};
+  $scope.user = {};
+  $scope.error = {};
 
-    $scope.register = function() {
+  $scope.register = function() {
 
         // TODO: add age verification step
 
         $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
+          content: 'Sending',
+          animation: 'fade-in',
+          showBackdrop: true,
+          maxWidth: 200,
+          showDelay: 0
         });
 
         var user = new Parse.User();
@@ -217,52 +231,52 @@ angular.module('starter.controllers', [])
         user.set("email", $scope.user.email);
 
         user.signUp(null, {
-            success: function(user) {
-                $ionicLoading.hide();
-                $rootScope.user = user;
-                $rootScope.isLoggedIn = true;
-                $state.go('connect', {
-                  clear: true
-                });
-            },
-            error: function(user, error) {
-                $ionicLoading.hide();
-                if (error.code === 125) {
-                    $scope.error.message = 'Please specify a valid email ' +
-                        'address';
-                } else if (error.code === 202) {
-                    $scope.error.message = 'The email address is already ' +
-                        'registered';
-                } else {
-                    $scope.error.message = error.message;
-                }
-                $scope.$apply();
+          success: function(user) {
+            $ionicLoading.hide();
+            $rootScope.user = user;
+            $rootScope.isLoggedIn = true;
+            $state.go('connect', {
+              clear: true
+            });
+          },
+          error: function(user, error) {
+            $ionicLoading.hide();
+            if (error.code === 125) {
+              $scope.error.message = 'Please specify a valid email ' +
+              'address';
+            } else if (error.code === 202) {
+              $scope.error.message = 'The email address is already ' +
+              'registered';
+            } else {
+              $scope.error.message = error.message;
             }
+            $scope.$apply();
+          }
         });
-    };
-})
+      };
+    })
 
 .controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
-    $scope.user = {};
-    $scope.error = {};
+  $scope.user = {};
+  $scope.error = {};
 
     // connect to the appropriate device
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
         $scope.device = peripheral;
       }
-    );
+      );
 
     BLEActiveDevice.setDevice($stateParams.deviceId);
 
     $scope.calibrate = function() {
-        $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
+      $scope.loading = $ionicLoading.show({
+        content: 'Sending',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+      });
     };
 
     $scope.confirm = function() {
@@ -270,25 +284,25 @@ angular.module('starter.controllers', [])
         clear:true
       });
     };
-})
+  })
 
 .controller('FillWaterController', function($scope, $state, $ionicLoading, $rootScope) {
-    $scope.user = {};
-    $scope.error = {};
+  $scope.user = {};
+  $scope.error = {};
 
-    $scope.calibrate = function() {
-        $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-    };
+  $scope.calibrate = function() {
+    $scope.loading = $ionicLoading.show({
+      content: 'Sending',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+  };
 
-    $scope.confirm = function() {
-      $state.go('tab.dash', {
-        clear:true
-      });
-    }
+  $scope.confirm = function() {
+    $state.go('tab.dash', {
+      clear:true
+    });
+  }
 })

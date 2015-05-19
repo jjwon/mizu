@@ -18,15 +18,15 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">Bottle Size (mL):</span>
-        <input type="number">
+        <input ng-model="user.bottleSize" type="number">
       </label>
       <label class="item item-input">
         <span class="input-label">Max Per Day (mL):</span>
-        <input type="number">
+        <input ng-model="user.dailyMax" type="number">
       </label>
     </div>
 
-  <button class="button button-full button-positive">
+  <button class="button button-full button-positive" ng-click="saveSettings()">
     Save
   </button>
   </ion-content>
