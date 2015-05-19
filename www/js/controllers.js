@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('DashCtrl', function($scope, $state, BLE) {
+.controller('DashCtrl', function($scope, $state, BLE, BLEActiveDevice) {
   $scope.logOut = function() {
     Parse.User.logOut();
     $state.transitionTo('welcome');
@@ -34,6 +34,7 @@ angular.module('starter.controllers', [])
     var water_pct = user.get("water_pct");
     var first_name = user.get("first_name");
     var device = user.get("device");
+    BLEActiveDevice.setDevice(device);
 
     // If you've somehow made it here without having a device get out.
     if (device == null) {
@@ -48,11 +49,15 @@ angular.module('starter.controllers', [])
     $scope.first_name = first_name;
     $scope.$apply();
 
-    BLE.connect(device).then(function(peripheral) {
-      BLEActiveDevice.readCap($scope);
-    }, function(reason) {
-      alert(reason);
-    });
+    var scanCallback =  function() {
+      BLE.connect(device).then(function(peripheral) {
+        BLEActiveDevice.readCap($scope);
+      }, function(reason) {
+        alert(reason);
+      });
+    }
+
+    BLE.scan().then(scanCallback);
   });
 })
 
@@ -241,6 +246,7 @@ angular.module('starter.controllers', [])
 .controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
     var currentUser = $rootScope.user;
 
+    BLEActiveDevice.setDevice($stateParams.deviceId);
     // connect to the appropriate device
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
@@ -250,8 +256,6 @@ angular.module('starter.controllers', [])
         currentUser.save();
       }
     );
-
-    BLEActiveDevice.setDevice($stateParams.deviceId);
 
     $scope.calibrate = function() {
         $scope.loading = $ionicLoading.show({
