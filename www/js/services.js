@@ -120,6 +120,9 @@ angular.module('starter.services', [])
         'characteristic': characteristicId
       };
     },
+    getDevice: function() {
+      return device;
+    },
     setBias: function() {
       var success = function() {
         alert("Calibrated!");
@@ -187,8 +190,8 @@ angular.module('starter.services', [])
         var midByte = bufView[1];
         var lowByte = bufView[2];
 
-        var capValue = "" + highByte + midByte + lowByte;
-
+        var capValue = parseInt("" + highByte + midByte + lowByte);
+        alert("2");
         // TODO: Convert capValue to a percentage using the information from the calibration
         // water_pct[getDate()] = 65;
         if (handle == 0) {
@@ -198,23 +201,30 @@ angular.module('starter.services', [])
           user.set("full_value", capValue);
           user.save();
         } else if (handle == 2) {
-          var recentValue = user.get("recent_value");
+          var recentValue = parseInt(user.get("recent_value"));
           //Water level dropped, else user filled water bottle
-          if (recent && (capValue - recentValue < 0)) {
-            var fullValue = user.get("full_value");
-            var emptyValue = user.get("emptyValue");
+          alert(capValue);
+          alert(recentValue);
 
-            var percentIncrease = (recentValue - capValue) / (fullValue - emptyValue);
-            scope.percentage = scope.percentage + percentIncrease;
-          } 
-          
           //set most recent value no matter what
           user.set("recent_value", capValue);
+          user.save();
+          alert("saved");
+          alert(capValue - recentValue);
+          if (recentValue && ((capValue - recentValue) < 0)) {
+            var fullValue = parseInt(user.get("full_value"));
+            var emptyValue = parseInt(user.get("empty_value"));
+            var percentIncrease = (recentValue - capValue) / (fullValue - emptyValue);
+            scope.percentage = parseInt(scope.percentage) + parseInt(percentIncrease);
+          } else {
+            scope.percentage = 0;
+          }
         }
 
         scope.capValue = capValue;
         scope.$apply();
       }
+      alert("1");
       ble.read(device, serviceId, capCharacteristic, successCallback);
     },
   }

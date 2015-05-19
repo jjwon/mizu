@@ -29,7 +29,6 @@ angular.module('starter.controllers', [])
     var water_pct = user.get("water_pct");
     var first_name = user.get("first_name");
     var device = user.get("device");
-    BLEActiveDevice.setDevice(device);
 
     // If you've somehow made it here without having a device get out.
     if (device == null) {
@@ -51,8 +50,15 @@ angular.module('starter.controllers', [])
         alert(reason);
       });
     }
-
-    BLE.scan().then(scanCallback);
+    if (BLEActiveDevice.getDevice()) {
+      alert("already have a device");
+      BLEActiveDevice.readCap($scope, user, 2);
+    } else {
+      $scope.percentage = 0;
+      alert("set device and scan");
+      BLEActiveDevice.setDevice(device);
+      BLE.scan().then(scanCallback);
+    }
   });
 })
 
