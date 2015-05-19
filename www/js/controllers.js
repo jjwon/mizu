@@ -305,6 +305,7 @@ angular.module('starter.controllers', [])
     //Write to BLE peripheral to set bias point
     $scope.confirm = function() {
       // BLEActiveDevice.setBias();
+      BLEActiveDevice.readCap($scope, currentUser, 0);
       BLEActiveDevice.stopNotify();
       $state.go('fill-water', {
         clear:true
@@ -312,9 +313,10 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('FillWaterController', function($scope, $state, $ionicLoading, $rootScope) {
+.controller('FillWaterController', function($scope, $state, $ionicLoading, $rootScope, BLEActiveDevice) {
     $scope.user = {};
     $scope.error = {};
+    var currentUser = $rootScope.user;
 
     $scope.calibrate = function() {
         $scope.loading = $ionicLoading.show({
@@ -327,6 +329,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.confirm = function() {
+      BLEActiveDevice.readCap($scope, currentUser, 1);
       $state.go('dash', {
         clear:true
       });

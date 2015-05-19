@@ -170,7 +170,6 @@ angular.module('starter.services', [])
       var failureCallback = function(reason) {
         alert("ERROR: " + reason);
       }
-
       ble.notify(device, serviceId, accelCharacteristic, successCallback, failureCallback);
     },
     readAccel: function() {
@@ -181,20 +180,25 @@ angular.module('starter.services', [])
 
       ble.read(device, serviceId, accelCharacteristic, successCallback);
     },
-    readCap: function(scope) {
+    readCap: function(scope, user, handle) {
       var successCallback = function(data) {
         var bufView = new Uint8Array(data);
         var highByte = bufView[0];
         var midByte = bufView[1];
         var lowByte = bufView[2];
-        alert(highByte);
-        alert(midByte);
-        alert(lowByte);
+
+        var capValue = "" + highByte + midByte + lowByte;
+        alert(capValue);
 
         // TODO: Convert capValue to a percentage using the information from the calibration
         // water_pct[getDate()] = 65;
-        // user.set("water_pct", water_pct);
-        // user.save();
+        if (handle == 0) {
+          user.set("empty_value", capValue);
+          user.save();
+        } else if (handle == 1) {
+          user.set("full_value", capValue);
+          user.save();
+        }
 
         scope.capValue = capValue;
         scope.$apply();
