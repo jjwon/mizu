@@ -164,7 +164,6 @@ angular.module('starter.services', [])
           scope.bottlestyle = "-webkit-transform: rotate(" + rotateAmount + "deg)";
           scope.$apply();
         }
-        alert("test");
         ble.read(device, serviceId, accelCharacteristic, dataRead);
       }
 
@@ -182,20 +181,24 @@ angular.module('starter.services', [])
 
       ble.read(device, serviceId, accelCharacteristic, successCallback);
     },
-    readCap: function(scope, user, water_pct) {
+    readCap: function(scope) {
       var successCallback = function(data) {
-        var value = bytesToString(data);
-        alert(capValue);
+        var bufView = new Uint8Array(data);
+        var highByte = bufView[0];
+        var midByte = bufView[1];
+        var lowByte = bufView[2];
+        alert(highByte);
+        alert(midByte);
+        alert(lowByte);
 
         // TODO: Convert capValue to a percentage using the information from the calibration
-        water_pct[getDate()] = 65;
-        user.set("water_pct", water_pct);
-        user.save();
+        // water_pct[getDate()] = 65;
+        // user.set("water_pct", water_pct);
+        // user.save();
 
-        scope.capValue = value;
+        scope.capValue = capValue;
         scope.$apply();
       }
-
       ble.read(device, serviceId, capCharacteristic, successCallback);
     },
   }

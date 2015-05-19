@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('DashCtrl', function($scope, $state, BLE) {
+.controller('DashCtrl', function($scope, $state, BLE, BLEActiveDevice) {
   $scope.logOut = function() {
     Parse.User.logOut();
     $state.transitionTo('welcome');
@@ -34,6 +34,7 @@ angular.module('starter.controllers', [])
     var water_pct = user.get("water_pct");
     var first_name = user.get("first_name");
     var device = user.get("device");
+    BLEActiveDevice.setDevice(device);
 
     // If you've somehow made it here without having a device get out.
     if (device == null) {
@@ -48,16 +49,17 @@ angular.module('starter.controllers', [])
     $scope.first_name = first_name;
     $scope.$apply();
 
-    if (device != "FF:FF:FF:FF:FF:FF") {
-      alert('fuck');
+
+    var scanCallback =  function() {
+      BLE.connect(device).then(function(peripheral) {
+        BLEActiveDevice.readCap($scope);
+      }, function(reason) {
+        alert(reason);
+      });     
     }
 
-    BLE.connect(device).then(function(peripheral) {
-      alert("hello!!!");
-      BLE.readCap($scope);
-    }, function(reason) {
-      alert(reason);
-    });
+    BLE.scan().then(scanCallback);
+    
   });
 })
 
