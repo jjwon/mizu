@@ -37,6 +37,10 @@ button {
 	color: $dark;
 	font-family: "Avenir", "Helvetica", "Arial", sans-serif;
 }
+h2 {
+	font-size: 22px;
+	text-align: center;
+}
 
 .bar {
 	&.bar-stable {
@@ -137,6 +141,9 @@ button {
 /* Buttons */
 .water {
 	background: $ocean;
+	h2 {
+		color: white;
+	}
 	.btn-mizu {
 		border: 1px solid white;
 		color: white;
@@ -153,6 +160,16 @@ button {
   outline: none;
   width: 100%;
 }
+
+.btn-footer {
+	bottom: 0;
+	padding: 10px 20px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	text-align: center;	
+}
+
 .btn-group {
 	bottom: 0;
 	padding: 10px 20px;
@@ -194,6 +211,24 @@ button {
 	position:absolute;
 	margin-top: 100px;
 	// bottom:50px;
+}
+
+/* Water Bottle */
+.water-bottle-container {
+	background: white;
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+	border-radius: 250px;
+	padding: 30px;
+}
+#water-bottle {
+	height: 100%;
+  -webkit-transition:-webkit-transform .5s;
+  -webkit-transition-timing-function: ease-out;
+  padding: 10px;
+  margin: auto;
+  display: block;
 }
 
 .fill {
