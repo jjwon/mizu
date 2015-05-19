@@ -32,9 +32,27 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+button {
 	color: $dark;
 	font-family: "Avenir", "Helvetica", "Arial", sans-serif;
+}
+h2 {
+	margin-top: 20px;
+	font-size: 22px;
+	text-align: center;
+}
+
+.bar {
+	&.bar-stable {
+		background: transparent;
+		border: none;
+	}
+	.button {
+		&.button-clear {
+			color: $dark;
+		}
+	}
 }
 
 #navigation {
@@ -126,6 +144,69 @@ p {
 	}
 }
 
+/* Buttons */
+.water {
+	background: $ocean;
+	h2 {
+		color: white;
+	}
+	.btn-mizu {
+		border: 1px solid white;
+		color: white;
+	}
+}
+
+.btn-mizu {
+	background: transparent;
+	border: 1px solid $ocean;
+	border-radius: 4px;
+	color: $ocean;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  width: 100%;
+}
+
+.btn-footer {
+	bottom: 0;
+	padding: 10px 20px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	text-align: center;	
+}
+
+.btn-group {
+	bottom: 0;
+	padding: 10px 20px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	.btn-mizu {
+		&:first-child {
+			margin-right: 2%;
+		}
+		float: left;
+	 	width: 48%;		
+	}
+}
+
+.mizu-logo {
+	h1 {
+		color: white;
+		font-family: "Dosis", sans-serif;
+		font-weight: 600;
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+  color: white;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	text-align: center;
+}
+
 /* Fill water bottle */
 
 .fill-bottle-img {
@@ -138,10 +219,30 @@ p {
 	// bottom:50px;
 }
 
+/* Water Bottle */
+.water-bottle-container {
+	background: white;
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+	border-radius: 250px;
+	padding: 30px;
+	margin-top: 50px;
+}
+#water-bottle {
+	height: 100%;
+  -webkit-transition:-webkit-transform .5s;
+  -webkit-transition-timing-function: ease-out;
+  padding: 10px;
+  margin: auto;
+  display: block;
+}
+
 .fill {
 	margin: 0 auto;
-	margin-top: 154px;
-	width: 50%;
+	margin-top: -100px;
+	width: 51px;
+	height: 90px;
 	bottom:0;
 	height:300px;
 	background: $ocean;
@@ -151,15 +252,15 @@ p {
 @-webkit-keyframes fillWave /* Safari and Chrome */
 {
 	0%, 100%  {
-		margin-top:454px;
+		margin-top:-10px;
 		height: 0px;
 	}
 	25%, 75%  {
-		margin-top:304px;
-		height:150px;
+		margin-top:-55px;
+		height:45px;
 	}
 	50%  {
-		margin-top:154px;
-		height: 300px;
+		margin-top:-100px;
+		height: 90px;
 	}
 }

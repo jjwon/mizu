@@ -7602,9 +7602,20 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p, button {
   color: #005A70;
   font-family: "Avenir", "Helvetica", "Arial", sans-serif; }
+
+h2 {
+  margin-top: 20px;
+  font-size: 22px;
+  text-align: center; }
+
+.bar.bar-stable {
+  background: transparent;
+  border: none; }
+.bar .button.button-clear {
+  color: #005A70; }
 
 #navigation {
   border-top: none;
@@ -7679,6 +7690,59 @@ h1, h2, h3, h4, h5, h6, p {
     border-radius: 0 75% 0 75%;
     height: 3.5em; } }
 
+/* Buttons */
+.water {
+  background: #00bdcd; }
+  .water h2 {
+    color: white; }
+  .water .btn-mizu {
+    border: 1px solid white;
+    color: white; }
+
+.btn-mizu {
+  background: transparent;
+  border: 1px solid #00bdcd;
+  border-radius: 4px;
+  color: #00bdcd;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  width: 100%; }
+
+.btn-footer {
+  bottom: 0;
+  padding: 10px 20px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center; }
+
+.btn-group {
+  bottom: 0;
+  padding: 10px 20px;
+  position: absolute;
+  left: 0;
+  width: 100%; }
+  .btn-group .btn-mizu {
+    float: left;
+    width: 48%; }
+    .btn-group .btn-mizu:first-child {
+      margin-right: 2%; }
+
+.mizu-logo {
+  color: white;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  text-align: center; }
+  .mizu-logo h1 {
+    color: white;
+    font-family: "Dosis", sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    text-transform: uppercase; }
+
 /* Fill water bottle */
 .fill-bottle-img {
   margin-left: -25%;
@@ -7687,10 +7751,29 @@ h1, h2, h3, h4, h5, h6, p {
   position: absolute;
   margin-top: 100px; }
 
+/* Water Bottle */
+.water-bottle-container {
+  background: white;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  border-radius: 250px;
+  padding: 30px;
+  margin-top: 50px; }
+
+#water-bottle {
+  height: 100%;
+  -webkit-transition: -webkit-transform 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  padding: 10px;
+  margin: auto;
+  display: block; }
+
 .fill {
   margin: 0 auto;
-  margin-top: 154px;
-  width: 50%;
+  margin-top: -100px;
+  width: 51px;
+  height: 90px;
   bottom: 0;
   height: 300px;
   background: #00bdcd;
@@ -7699,13 +7782,13 @@ h1, h2, h3, h4, h5, h6, p {
 
 @-webkit-keyframes fillWave {
   0%, 100% {
-    margin-top: 454px;
+    margin-top: -10px;
     height: 0px; }
 
   25%, 75% {
-    margin-top: 304px;
-    height: 150px; }
+    margin-top: -55px;
+    height: 45px; }
 
   50% {
-    margin-top: 154px;
-    height: 300px; } }
+    margin-top: -100px;
+    height: 90px; } }
