@@ -59,7 +59,7 @@ angular.module('starter.controllers', [])
 .controller('ConnectCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
 
   // keep a reference since devices will be added
-  $scope.user = {};
+  $scope.userInfo = {};
   $scope.devices = BLE.devices;
 
   var success = function () {
@@ -82,18 +82,18 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
       }
     )
-  }
+  };
 
   $scope.saveBottleData = function() {
-    var currentUser = $rootScope.user;
-    currentUser.set("bottle_size", $scope.user.bottle_size);
-    currentUser.set("daily_max", $scope.user.daily_max);
+    var currentUser = $scope.user;
+    currentUser.set("bottle_size", $scope.userInfo.bottle_size);
+    currentUser.set("daily_max", $scope.userInfo.daily_max);
     currentUser.save();
-  }
+  };
 
   // initial scan
-  BLE.disconnect();
-  BLE.scan().then(success, failure);
+  // BLE.disconnect();
+  // BLE.scan().then(success, failure);
 })
 
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
@@ -303,6 +303,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SettingsCtrl', function($rootScope, $scope, $state, BLE) {
+  $scope.userInfo = {}
+
   $scope.goToConnect = function() {
     $state.go('connect', {
       clear: true
@@ -313,5 +315,21 @@ angular.module('starter.controllers', [])
     Parse.User.logOut();
     BLE.disconnect();
     $state.transitionTo('welcome');
+  };
+
+  $scope.saveUserData = function() {
+    var currentUser = $scope.user;
+    var userInfo = $scope.userInfo;
+    if (userInfo.hasOwnProperty('first_name')) {
+      currentUser.set("first_name", $scope.userInfo.first_name);
+    }
+    if (userInfo.hasOwnProperty('last_name')) {
+      currentUser.set("last_name", $scope.userInfo.last_name);
+    }
+    if (userInfo.hasOwnProperty('email')) {
+      currentUser.set("email", $scope.userInfo.email);
+      currentUser.set("username", $scope.userInfo.email);
+    }
+    currentUser.save();
   };
 })

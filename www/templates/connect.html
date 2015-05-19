@@ -7,16 +7,16 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">Bottle Size (mL):</span>
-        <input ng-model="user.bottle_size" type="number">
+        <input ng-model="userInfo.bottle_size" type="number">
       </label>
       <label class="item item-input">
         <span class="input-label">Max Per Day (mL):</span>
-        <input ng-model="user.daily_max" type="number">
+        <input ng-model="userInfo.daily_max" type="number">
       </label>
-      <button class="button button-clear item"
-           ng-click="saveBottleData()">
+      <button class="button button-balanced item"
+              ng-click="saveBottleData()">
         Save
-      </div>
+      </button>
     </div>
     <ion-list>
       <ion-item class="item-icon-right"

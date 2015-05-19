@@ -6,20 +6,24 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">First name:</span>
-        <input ng-model="user.first_name" type="text">
+        <input ng-model="userInfo.first_name" type="text">
       </label>
       <label class="item item-input">
         <span class="input-label">Last name:</span>
-        <input ng-model="user.last_name" type="text">
+        <input ng-model="userInfo.last_name" type="text">
       </label>
       <label class="item item-input">
         <span class="input-label">Email:</span>
-        <input ng-model="user.email" type="text">
+        <input ng-model="userInfo.email" type="text">
       </label>
-      <div class="item"
-           ng-click="goToConnect()">
-        Recalibrate Mizu
-      </div>
     </div>
+    <button class="button button-full button-balanced item"
+            ng-click="saveUserData()">
+      Save
+    </button>
+    <button class="button button-full button-positive item"
+            ng-click="goToConnect()">
+      Recalibrate Mizu
+    </button>
   </ion-content>
 </ion-view>
