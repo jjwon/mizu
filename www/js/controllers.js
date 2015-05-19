@@ -52,7 +52,7 @@ angular.module('starter.controllers', [])
 
     var scanCallback =  function() {
       BLE.connect(device).then(function(peripheral) {
-        BLEActiveDevice.readCap($scope);
+        BLEActiveDevice.readCap($scope, user, 2);
       }, function(reason) {
         alert(reason);
       });     

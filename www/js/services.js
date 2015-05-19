@@ -188,7 +188,6 @@ angular.module('starter.services', [])
         var lowByte = bufView[2];
 
         var capValue = "" + highByte + midByte + lowByte;
-        alert(capValue);
 
         // TODO: Convert capValue to a percentage using the information from the calibration
         // water_pct[getDate()] = 65;
@@ -198,6 +197,19 @@ angular.module('starter.services', [])
         } else if (handle == 1) {
           user.set("full_value", capValue);
           user.save();
+        } else if (handle == 2) {
+          var recentValue = user.get("recent_value");
+          //Water level dropped, else user filled water bottle
+          if (recent && (capValue - recentValue < 0)) {
+            var fullValue = user.get("full_value");
+            var emptyValue = user.get("emptyValue");
+
+            var percentIncrease = (recentValue - capValue) / (fullValue - emptyValue);
+            scope.percentage = scope.percentage + percentIncrease;
+          } 
+          
+          //set most recent value no matter what
+          user.set("recent_value", capValue);
         }
 
         scope.capValue = capValue;
