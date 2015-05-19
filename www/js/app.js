@@ -67,9 +67,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('connect', {
-    url: "/connect",
+    url: '/connect',
     templateUrl: 'templates/connect.html',
-    controller: 'BLECtrl'
+    controller: 'ConnectCtrl'
+  })
+
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',
+    controller: 'SettingsCtrl'
   })
 
   .state('dash', {

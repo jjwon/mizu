@@ -1,0 +1,29 @@
+<ion-view view-title="Settings">
+  <ion-nav-buttons side="secondary">
+    <button class="button icon ion-log-out" ng-click="logOut()">Log Out</button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input">
+        <span class="input-label">First name:</span>
+        <input ng-model="userInfo.first_name" type="text">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Last name:</span>
+        <input ng-model="userInfo.last_name" type="text">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Email:</span>
+        <input ng-model="userInfo.email" type="text">
+      </label>
+    </div>
+    <button class="button button-full button-balanced item"
+            ng-click="saveUserData()">
+      Save
+    </button>
+    <button class="button button-full button-positive item"
+            ng-click="goToConnect()">
+      Recalibrate Mizu
+    </button>
+  </ion-content>
+</ion-view>

@@ -24,11 +24,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashCtrl', function($scope, $state, BLE, BLEActiveDevice) {
-  $scope.logOut = function() {
-    Parse.User.logOut();
-    $state.transitionTo('welcome');
-  };
-
   Parse.User.current().fetch().then(function(user) {
     var today = getDate();
     var water_pct = user.get("water_pct");
@@ -49,82 +44,56 @@ angular.module('starter.controllers', [])
     $scope.first_name = first_name;
     $scope.$apply();
 
-
     var scanCallback =  function() {
       BLE.connect(device).then(function(peripheral) {
         BLEActiveDevice.readCap($scope, user, 2);
       }, function(reason) {
         alert(reason);
-      });     
+      });
     }
 
     BLE.scan().then(scanCallback);
-    
   });
 })
 
-.controller('BLECtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
+.controller('ConnectCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
 
   // keep a reference since devices will be added
+  $scope.userInfo = {};
   $scope.devices = BLE.devices;
 
   var success = function () {
-      if ($scope.devices.length < 1) {
-          // a better solution would be to update a status message rather than an alert
-          alert("Didn't find any Bluetooth Low Energy devices.");
-      }
+    if ($scope.devices.length < 1) {
+      // a better solution would be to update a status message rather than an alert
+      alert("Didn't find any Bluetooth Low Energy devices.");
+    }
   };
 
   var failure = function (error) {
-      alert(error);
+    alert(error);
   };
 
   // pull to refresh
   $scope.onRefresh = function() {
-      BLE.scan().then(
-          success, failure
-      ).finally(
-          function() {
-              $scope.$broadcast('scroll.refreshComplete');
-          }
-      )
-  }
+    BLE.scan().then(
+      success, failure
+    ).finally(
+      function() {
+        $scope.$broadcast('scroll.refreshComplete');
+      }
+    )
+  };
+
+  $scope.saveBottleData = function() {
+    var currentUser = $scope.user;
+    currentUser.set("bottle_size", $scope.userInfo.bottle_size);
+    currentUser.set("daily_max", $scope.userInfo.daily_max);
+    currentUser.save();
+  };
 
   // initial scan
+  BLE.disconnect();
   BLE.scan().then(success, failure);
-})
-
-.controller('BLEServicesCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
-  // connect to the appropriate device
-  BLE.connect($stateParams.deviceId).then(
-    function(peripheral) {
-      $rootScope.device = peripheral;
-    }
-  );
-
-  // populate factory with attributes we want to use for notify
-  $scope.setAttributes = function(deviceId, serviceId, characteristicId) {
-    BLEActiveDevice.setAttributes(deviceId, serviceId, characteristicId);
-    BLEActiveDevice.read();
-  };
-})
-
-.controller('BLENotifyCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
-  // grab attributes from factory
-  $scope.device = BLEActiveDevice.getAttributes()['device'];
-  $scope.service = BLEActiveDevice.getAttributes()['service'];
-  $scope.characteristic = BLEActiveDevice.getAttributes()['characteristic'];
-  $scope.notifications = [];
-
-  // subscribe to notifications
-  BLE.startNotification($scope.device, $scope.service, $scope.characteristic,
-    function(notification) {
-      notifications.push(notification);
-    },
-    function() {
-      console.log('Failed to start notifications');
-      alert('Failed to start notifications');
-    });
 })
 
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
@@ -314,24 +283,56 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FillWaterController', function($scope, $state, $ionicLoading, $rootScope, BLEActiveDevice) {
-    $scope.user = {};
-    $scope.error = {};
-    var currentUser = $rootScope.user;
+  $scope.user = {};
+  $scope.error = {};
+  var currentUser = $rootScope.user;
 
-    $scope.calibrate = function() {
-        $scope.loading = $ionicLoading.show({
-            content: 'Sending',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-    };
+  $scope.calibrate = function() {
+    $scope.loading = $ionicLoading.show({
+      content: 'Sending',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+  };
 
-    $scope.confirm = function() {
-      BLEActiveDevice.readCap($scope, currentUser, 1);
-      $state.go('dash', {
-        clear:true
-      });
+  $scope.confirm = function() {
+    BLEActiveDevice.readCap($scope, currentUser, 1);
+    $state.go('dash', {
+      clear:true
+  });
+  }
+})
+
+.controller('SettingsCtrl', function($rootScope, $scope, $state, BLE) {
+  $scope.userInfo = {}
+
+  $scope.goToConnect = function() {
+    $state.go('connect', {
+      clear: true
+    });
+  }
+
+  $scope.logOut = function() {
+    Parse.User.logOut();
+    BLE.disconnect();
+    $state.transitionTo('welcome');
+  };
+
+  $scope.saveUserData = function() {
+    var currentUser = $scope.user;
+    var userInfo = $scope.userInfo;
+    if (userInfo.hasOwnProperty('first_name')) {
+      currentUser.set("first_name", $scope.userInfo.first_name);
     }
+    if (userInfo.hasOwnProperty('last_name')) {
+      currentUser.set("last_name", $scope.userInfo.last_name);
+    }
+    if (userInfo.hasOwnProperty('email')) {
+      currentUser.set("email", $scope.userInfo.email);
+      currentUser.set("username", $scope.userInfo.email);
+    }
+    currentUser.save();
+  };
 })
