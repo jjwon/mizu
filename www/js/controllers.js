@@ -92,8 +92,8 @@ angular.module('starter.controllers', [])
   };
 
   // initial scan
-  // BLE.disconnect();
-  // BLE.scan().then(success, failure);
+  BLE.disconnect();
+  BLE.scan().then(success, failure);
 })
 
 .controller('LoginController', function($scope, $state, $rootScope, $ionicLoading) {
