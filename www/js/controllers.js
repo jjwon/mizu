@@ -56,7 +56,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('BLECtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
+.controller('ConnectCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
 
   // keep a reference since devices will be added
   $scope.devices = BLE.devices;
