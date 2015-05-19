@@ -7602,12 +7602,12 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p, button {
   color: #005A70;
   font-family: "Avenir", "Helvetica", "Arial", sans-serif; }
 
 .bar.bar-stable {
-  background: white;
+  background: transparent;
   border: none; }
 
 #navigation {
@@ -7682,6 +7682,49 @@ h1, h2, h3, h4, h5, h6, p {
   50% {
     border-radius: 0 75% 0 75%;
     height: 3.5em; } }
+
+/* Buttons */
+.water {
+  background: #00bdcd; }
+  .water .btn-mizu {
+    border: 1px solid white;
+    color: white; }
+
+.btn-mizu {
+  background: transparent;
+  border: 1px solid #00bdcd;
+  border-radius: 4px;
+  color: #00bdcd;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  width: 100%; }
+
+.btn-group {
+  bottom: 0;
+  padding: 10px 20px;
+  position: absolute;
+  left: 0;
+  width: 100%; }
+  .btn-group .btn-mizu {
+    float: left;
+    width: 48%; }
+    .btn-group .btn-mizu:first-child {
+      margin-right: 2%; }
+
+.mizu-logo {
+  color: white;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  text-align: center; }
+  .mizu-logo h1 {
+    color: white;
+    font-family: "Dosis", sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    text-transform: uppercase; }
 
 /* Fill water bottle */
 .fill-bottle-img {

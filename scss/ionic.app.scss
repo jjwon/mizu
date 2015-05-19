@@ -32,14 +32,15 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+button {
 	color: $dark;
 	font-family: "Avenir", "Helvetica", "Arial", sans-serif;
 }
 
 .bar {
 	&.bar-stable {
-		background: white;
+		background: transparent;
 		border: none;
 	}
 }
@@ -131,6 +132,56 @@ p {
 		border-radius: 0 75% 0 75%;
 		height: 3.5em;
 	}
+}
+
+/* Buttons */
+.water {
+	background: $ocean;
+	.btn-mizu {
+		border: 1px solid white;
+		color: white;
+	}
+}
+
+.btn-mizu {
+	background: transparent;
+	border: 1px solid $ocean;
+	border-radius: 4px;
+	color: $ocean;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  width: 100%;
+}
+.btn-group {
+	bottom: 0;
+	padding: 10px 20px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	.btn-mizu {
+		&:first-child {
+			margin-right: 2%;
+		}
+		float: left;
+	 	width: 48%;		
+	}
+}
+
+.mizu-logo {
+	h1 {
+		color: white;
+		font-family: "Dosis", sans-serif;
+		font-weight: 600;
+		font-size: 40px;
+		text-transform: uppercase;
+	}
+  color: white;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	text-align: center;
 }
 
 /* Fill water bottle */

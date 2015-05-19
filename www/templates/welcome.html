@@ -1,6 +1,11 @@
-<ion-view title="Mizu">
-    <ion-content has-header="true" has-tabs="true" padding="true">
-      <button class="button button-full block-center button-positive" ng-click="login()">Log In</button>
-      <button class="button button-full block-center button-positive" ng-click="signUp()">Sign Up</button>
-  </ion-content>
+<ion-view hide-back-button="true">
+    <ion-pane class="water" scroll="false" has-header="false">
+		<div class="mizu-logo">
+			<h1>Mizu</h1>
+		</div>
+    	<div class="btn-group">
+	      <button class="btn-mizu" ng-click="login()">Log In</button>
+	      <button class="btn-mizu" ng-click="signUp()">Sign Up</button>
+	     </div>
+  </ion-pane>
 </ion-view>
