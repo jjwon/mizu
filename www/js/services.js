@@ -163,6 +163,7 @@ angular.module('starter.services', [])
           scope.bottlestyle = "-webkit-transform: rotate(" + rotateAmount + "deg)";
           scope.$apply()
         }
+        alert("test");
         ble.read(device, serviceId, accelCharacteristic, dataRead);
       }
 
@@ -170,7 +171,7 @@ angular.module('starter.services', [])
         alert("ERROR: " + reason);
       }
 
-      ble.notify(device, serviceId, accelCharacteristic, successCallback);
+      ble.notify(device, serviceId, accelCharacteristic, successCallback, failureCallback);
     },
 
     readAccel: function() {

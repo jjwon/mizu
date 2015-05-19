@@ -264,6 +264,7 @@ angular.module('starter.controllers', [])
 .controller('CalibrateController', function($scope, $state, $stateParams, $ionicLoading, $rootScope, BLE, BLEActiveDevice) {
     var currentUser = $rootScope.user;
 
+    BLEActiveDevice.setDevice($stateParams.deviceId);
     // connect to the appropriate device
     BLE.connect($stateParams.deviceId).then(
       function(peripheral) {
@@ -273,8 +274,6 @@ angular.module('starter.controllers', [])
         currentUser.save();
       }
     );
-
-    BLEActiveDevice.setDevice($stateParams.deviceId);
 
     $scope.calibrate = function() {
         $scope.loading = $ionicLoading.show({
