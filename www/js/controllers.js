@@ -24,11 +24,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashCtrl', function($scope, $state, BLE, BLEActiveDevice) {
-  $scope.logOut = function() {
-    Parse.User.logOut();
-    $state.transitionTo('welcome');
-  };
-
   Parse.User.current().fetch().then(function(user) {
     var today = getDate();
     var water_pct = user.get("water_pct");
@@ -64,31 +59,40 @@ angular.module('starter.controllers', [])
 .controller('ConnectCtrl', function($scope, $stateParams, BLE, BLEActiveDevice) {
 
   // keep a reference since devices will be added
+  $scope.user = {};
   $scope.devices = BLE.devices;
 
   var success = function () {
-      if ($scope.devices.length < 1) {
-          // a better solution would be to update a status message rather than an alert
-          alert("Didn't find any Bluetooth Low Energy devices.");
-      }
+    if ($scope.devices.length < 1) {
+      // a better solution would be to update a status message rather than an alert
+      alert("Didn't find any Bluetooth Low Energy devices.");
+    }
   };
 
   var failure = function (error) {
-      alert(error);
+    alert(error);
   };
 
   // pull to refresh
   $scope.onRefresh = function() {
-      BLE.scan().then(
-          success, failure
-      ).finally(
-          function() {
-              $scope.$broadcast('scroll.refreshComplete');
-          }
-      )
+    BLE.scan().then(
+      success, failure
+    ).finally(
+      function() {
+        $scope.$broadcast('scroll.refreshComplete');
+      }
+    )
+  }
+
+  $scope.saveBottleData = function() {
+    var currentUser = $rootScope.user;
+    currentUser.set("bottle_size", $scope.user.bottle_size);
+    currentUser.set("daily_max", $scope.user.daily_max);
+    currentUser.save();
   }
 
   // initial scan
+  BLE.disconnect();
   BLE.scan().then(success, failure);
 })
 
@@ -298,10 +302,16 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('SettingsCtrl', function($scope, $state) {
+.controller('SettingsCtrl', function($rootScope, $scope, $state, BLE) {
   $scope.goToConnect = function() {
-    $state.go('connect' {
+    $state.go('connect', {
       clear: true
     });
   }
+
+  $scope.logOut = function() {
+    Parse.User.logOut();
+    BLE.disconnect();
+    $state.transitionTo('welcome');
+  };
 })

@@ -1,4 +1,7 @@
 <ion-view view-title="Settings">
+  <ion-nav-buttons side="secondary">
+    <button class="button icon ion-log-out" ng-click="logOut()">Log Out</button>
+  </ion-nav-buttons>
   <ion-content>
     <div class="list">
       <label class="item item-input">
@@ -13,7 +16,7 @@
         <span class="input-label">Email:</span>
         <input ng-model="user.email" type="text">
       </label>
-      <div class="item item-button-right"
+      <div class="item"
            ng-click="goToConnect()">
         Recalibrate Mizu
       </div>
