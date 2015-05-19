@@ -34,17 +34,18 @@ angular.module('starter.controllers', [])
     var water_pct = user.get("water_pct");
     var first_name = user.get("first_name");
 
-    // If you're at this page, you have already registered a device.
-    var device = user.get("device");
-    BLE.connect(device).then(function(peripheral) {
-      BLE.readCap($scope);
-    });
-
     document.getElementsByClassName("waves")[0].style.top = (100-water_pct[today]) + "%";
     document.getElementsByClassName("drop")[0].style.top = "calc(" + (100-water_pct[today]) + "% - .5em)";
     $scope.percentage = water_pct[today];
     $scope.first_name = first_name;
     $scope.$apply();
+
+    // If you're at this page, you have already registered a device.
+    var device = user.get("device");
+    BLE.connect(device).then(function(peripheral) {
+      alert("hello!!!");
+      BLE.readCap($scope);
+    });
   });
 })
 
