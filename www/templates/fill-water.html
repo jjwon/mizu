@@ -1,13 +1,15 @@
-<ion-view view-title="FillWater">
-  <ion-content class="padding" has-header="true" has-tabs="true" >
+<ion-view hide-back-button="true">
+  <ion-pane class="padding center water" has-header="false">
+
+  	<div class="water-bottle-container">
+    	<img id="water-bottle" src="img/waterbottle.png">
+    	<div class="fill"></div>
+    </div>
+    <h2>Fill your water bottle</h2>
 
   </ion-content>
 
-    <img class="fill-bottle-img" src="img/waterbottle.png">
-    <div class="fill">
+    <div class="btn-footer water" ng-click="confirm()">
+        <div class="btn-mizu">Confirm</div>
     </div>
-
-    <div class="bar bar-footer bar-balanced" ng-click="confirm()">
-        <div class="title">Confirm</div>
-    </div>
-</ion-view>
+</ion-pane>
