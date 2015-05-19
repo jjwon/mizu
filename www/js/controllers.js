@@ -36,7 +36,9 @@ angular.module('starter.controllers', [])
 
     // If you're at this page, you have already registered a device.
     var device = user.get("device");
-    BLE.connect(device);
+    BLE.connect(device).then(function(peripheral) {
+      BLE.readCap($scope);
+    });
 
     document.getElementsByClassName("waves")[0].style.top = (100-water_pct[today]) + "%";
     document.getElementsByClassName("drop")[0].style.top = "calc(" + (100-water_pct[today]) + "% - .5em)";
