@@ -37,6 +37,13 @@ p {
 	font-family: "Avenir", "Helvetica", "Arial", sans-serif;
 }
 
+.bar {
+	&.bar-stable {
+		background: white;
+		border: none;
+	}
+}
+
 #navigation {
 	border-top: none;
 	position: fixed;

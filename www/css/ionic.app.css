@@ -7606,6 +7606,10 @@ h1, h2, h3, h4, h5, h6, p {
   color: #005A70;
   font-family: "Avenir", "Helvetica", "Arial", sans-serif; }
 
+.bar.bar-stable {
+  background: white;
+  border: none; }
+
 #navigation {
   border-top: none;
   position: fixed;
