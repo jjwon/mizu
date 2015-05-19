@@ -181,13 +181,15 @@ angular.module('starter.services', [])
 
       ble.read(device, serviceId, accelCharacteristic, successCallback);
     },
-    readCap: function(scope) {
+    readCap: function(scope, user, water_pct) {
       var successCallback = function(data) {
         var value = bytesToString(data);
         alert(capValue);
 
         // TODO: Convert capValue to a percentage using the information from the calibration
-        // TODO: Store the percentage in Parse
+        water_pct[getDate()] = 65;
+        user.set("water_pct", water_pct);
+        user.save();
 
         scope.capValue = value;
         scope.$apply();
