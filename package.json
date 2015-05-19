@@ -1,7 +1,7 @@
 {
-  "name": "ionic-ble",
-  "version": "1.0.0",
-  "description": "ionic-ble: An Ionic project",
+  "name": "Mizu",
+  "version": "0.0.1",
+  "description": "Mizu: bringing big data to hydration",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",

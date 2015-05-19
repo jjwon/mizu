@@ -7680,22 +7680,32 @@ h1, h2, h3, h4, h5, h6, p {
     height: 3.5em; } }
 
 /* Fill water bottle */
-.fill {
+.fill-bottle-img {
+  margin-left: -25%;
+  width: 50%;
+  left: 50%;
   position: absolute;
+  margin-top: 100px; }
+
+.fill {
   margin: 0 auto;
-  width: 100%;
-  height: 40px;
+  margin-top: 154px;
+  width: 50%;
   bottom: 0;
+  height: 300px;
   background: #00bdcd;
   -webkit-animation: fillWave 5s linear infinite;
   /* Safari and Chrome */ }
 
 @-webkit-keyframes fillWave {
   0%, 100% {
-    height: 0%; }
+    margin-top: 454px;
+    height: 0px; }
 
   25%, 75% {
-    height: 50%; }
+    margin-top: 304px;
+    height: 150px; }
 
   50% {
-    height: 100%; } }
+    margin-top: 154px;
+    height: 300px; } }

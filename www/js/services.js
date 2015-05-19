@@ -87,6 +87,7 @@ angular.module('starter.services', [])
   var serviceId = "c84fcc88-8610-4874-85c6-fe7483abe0c1";
   var characteristicId;
   var accelCharacteristic = "ACC119df-eb7a-49d0-92f9-b6b97846a860";
+  var capCharacteristic = "CA9fcf1a-b2bd-42f6-90c5-3e829a9f3d48";
   var pitch;
   var roll;
   var z;
@@ -140,9 +141,9 @@ angular.module('starter.services', [])
       var successCallback = function(data) {
         alert(data);
       }
-      ble.read( device, 
-                serviceId, 
-                characteristicId, 
+      ble.read( device,
+                serviceId,
+                characteristicId,
                 successCallback
               );
     },
@@ -161,7 +162,7 @@ angular.module('starter.services', [])
             rotateAmount = roll;
           }
           scope.bottlestyle = "-webkit-transform: rotate(" + rotateAmount + "deg)";
-          scope.$apply()
+          scope.$apply();
         }
         alert("test");
         ble.read(device, serviceId, accelCharacteristic, dataRead);
@@ -173,7 +174,6 @@ angular.module('starter.services', [])
 
       ble.notify(device, serviceId, accelCharacteristic, successCallback, failureCallback);
     },
-
     readAccel: function() {
       var successCallback = function(data) {
         alert(bytesToString(data));
@@ -181,6 +181,22 @@ angular.module('starter.services', [])
       }
 
       ble.read(device, serviceId, accelCharacteristic, successCallback);
+    },
+    readCap: function(scope, user, water_pct) {
+      var successCallback = function(data) {
+        var value = bytesToString(data);
+        alert(capValue);
+
+        // TODO: Convert capValue to a percentage using the information from the calibration
+        water_pct[getDate()] = 65;
+        user.set("water_pct", water_pct);
+        user.save();
+
+        scope.capValue = value;
+        scope.$apply();
+      }
+
+      ble.read(device, serviceId, capCharacteristic, successCallback);
     },
   }
 });
